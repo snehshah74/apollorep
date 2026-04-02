@@ -27,7 +27,7 @@ async function main() {
 ║ Mode:         ${mode.padEnd(34)} ║
 ║ Trust Level:  ${String(trustLevel).padEnd(2)} — ${trustDesc.slice(0, 29).padEnd(30)} ║
 ║ Monitoring:   ${String(accounts.length).padEnd(2)} accounts                        ║
-║ LLM:          Gemini 1.5 Flash (free tier)        ║
+║ LLM:          Gemini 2.0 Flash (free tier)        ║
 ║ Email:        Resend (${fromEmail.slice(0, 27).padEnd(27)})║
 ╚═══════════════════════════════════════════════════╝`);
 
@@ -50,15 +50,18 @@ async function main() {
     const { runPipeline } = await import("./agents/orchestrator");
     const { startServer } = await import("./server/approvalServer");
 
-    await runPipeline();
-
+    // Start server first so UI is available even if pipeline is slow
     const port = process.env.PORT || "3000";
     startServer();
 
-    console.log(`
-Pipeline complete. Approval UI running at http://localhost:${port}
-Open your browser to review and approve pending actions.
-    `);
+    // Run pipeline in background — server stays up even if pipeline errors
+    runPipeline()
+      .then(() => {
+        console.log(`\nPipeline complete. Open http://localhost:${port} to review pending actions.`);
+      })
+      .catch((err) => {
+        console.error("Pipeline error (server still running):", err);
+      });
   } else {
     console.error(`Unknown mode: "${mode}". Valid modes: pipeline, heartbeat, server, eval, demo`);
     process.exit(1);
