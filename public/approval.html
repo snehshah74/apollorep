@@ -1109,9 +1109,19 @@
     }
   }
 
-  // ─── Run pipeline (no-op — just shows a message) ──────────
-  function triggerPipeline() {
-    toast('Pipeline triggered! Restart the server with: npm start pipeline', 'success');
+  // ─── Run pipeline ─────────────────────────────────────────
+  async function triggerPipeline() {
+    const btns = document.querySelectorAll('.run-btn');
+    btns.forEach(b => { b.disabled = true; b.textContent = 'Running…'; });
+    try {
+      await fetch(`${API}/api/pipeline/run`, { method: 'POST' });
+      toast('Pipeline running — new actions will appear shortly', 'success');
+    } catch (e) {
+      toast('Failed to start pipeline', 'error');
+    }
+    setTimeout(() => {
+      btns.forEach(b => { b.disabled = false; b.textContent = 'Run Pipeline'; });
+    }, 30000);
   }
 
   // ─── Countdown ────────────────────────────────────────────

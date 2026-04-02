@@ -14,6 +14,7 @@ import {
   rejectAction,
 } from "../trust/approvalQueue";
 import { sendEmail } from "../tools/emailSender";
+import { runPipeline } from "../agents/orchestrator";
 import {
   getTrustLevel,
   getTrustLevelDescription,
@@ -155,6 +156,14 @@ app.get("/api/trust", (_req, res) => {
   } catch (err) {
     res.status(500).json({ error: String(err) });
   }
+});
+
+// POST /api/pipeline/run — trigger pipeline from UI (fire and forget)
+app.post("/api/pipeline/run", (_req, res) => {
+  res.json({ success: true, message: "Pipeline started" });
+  runPipeline().catch((err) => {
+    console.error(`[${timestamp()}] [ApprovalServer] Pipeline run error:`, err);
+  });
 });
 
 // GET /health — Railway healthcheck
