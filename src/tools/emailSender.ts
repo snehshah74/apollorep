@@ -7,7 +7,14 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const resend = new Resend(process.env.RESEND_API_KEY || "");
+// Lazy-initialized — avoids crashing on startup if key is missing
+let _resend: Resend | null = null;
+function getResend(): Resend | null {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return null;
+  if (!_resend) _resend = new Resend(key);
+  return _resend;
+}
 
 function timestamp(): string {
   return new Date().toTimeString().slice(0, 8);
@@ -20,9 +27,14 @@ export async function sendEmail(
   actionId: string
 ): Promise<boolean> {
   try {
+    const resend = getResend();
+    if (!resend) {
+      console.warn(`[${timestamp()}] [EmailSender] RESEND_API_KEY not set — skipping send | actionId: ${actionId}`);
+      return false;
+    }
     const from = process.env.FROM_EMAIL || "apollorep@yourdomain.com";
 
-    const result = await resend.emails.send({
+    const result = await resend!.emails.send({
       from,
       to,
       subject,
