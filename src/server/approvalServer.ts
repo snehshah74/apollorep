@@ -157,6 +157,11 @@ app.get("/api/trust", (_req, res) => {
   }
 });
 
+// GET /health — Railway healthcheck
+app.get("/health", (_req, res) => {
+  res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
 // GET / — serve approval UI
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, "../../public/approval.html"));
@@ -165,9 +170,9 @@ app.get("/", (_req, res) => {
 const PORT = parseInt(process.env.PORT || "3000", 10);
 
 export function startServer(): void {
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(
-      `[${timestamp()}] [ApprovalServer] Server running at http://localhost:${PORT}`
+      `[${timestamp()}] [ApprovalServer] Server running at http://0.0.0.0:${PORT}`
     );
     console.log(
       `[${timestamp()}] [ApprovalServer] Approval UI: http://localhost:${PORT}/`

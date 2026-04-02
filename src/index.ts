@@ -11,7 +11,8 @@ import { getTrustLevel, getTrustLevelDescription } from "./trust/trustModel";
 import { loadAllAccounts } from "./tools/crmLookup";
 
 async function main() {
-  const mode = process.argv[2] || "demo";
+  // Default to "server" in production (Railway), "demo" locally
+  const mode = process.argv[2] || (process.env.RAILWAY_ENVIRONMENT ? "server" : "demo");
 
   const trustLevel = getTrustLevel();
   const trustDesc = getTrustLevelDescription(trustLevel);

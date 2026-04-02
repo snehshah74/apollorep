@@ -68,5 +68,22 @@
     },
     "result": "Brief queued for approval",
     "timestamp": "2026-04-02T20:21:02.071Z"
+  },
+  {
+    "id": "audit_1775162523179_d6y3",
+    "action": "send_cold_email",
+    "trustLevel": 1,
+    "approved": true,
+    "payload": {
+      "contactEmail": "s.chen@meridiananalytics.io",
+      "contactName": "Sarah Chen",
+      "subject": "The $22M round + doubling sales headcount",
+      "body": "Sarah — congrats on the Series B. Companies that double sales headcount in 90 days usually hit a wall around month 4 when the tooling can't keep up with rep volume. Apollo solves exactly that. 15 minutes this week?",
+      "htmlBody": "<p>Sarah — congrats on the Series B. Companies that double sales headcount in 90 days usually hit a wall around month 4 when the tooling can't keep up with rep volume. <strong>Apollo solves exactly that. 15 minutes this week?</strong></p>",
+      "triggerSignal": "$22M Series B closed March 28th, earmarked for GTM expansion — CEO publicly stated plans to double sales org in 90 days.",
+      "confidence": 9
+    },
+    "result": "Cold email send failed",
+    "timestamp": "2026-04-02T20:42:03.179Z"
   }
 ]
