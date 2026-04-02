@@ -1,0 +1,137 @@
+[
+  {
+    "id": "sig_001",
+    "accountId": "acc_001",
+    "type": "funding_round",
+    "summary": "Meridian Analytics closed a $22M Series B led by Sequoia Capital on March 28th. The round was specifically earmarked for go-to-market expansion including sales headcount and sales tech stack upgrades. Their CEO publicly stated they plan to double the sales org in 90 days.",
+    "detectedAt": "2026-03-29T09:15:00Z",
+    "strength": 9,
+    "sourceUrl": "https://techcrunch.com/2026/03/28/meridian-analytics-series-b"
+  },
+  {
+    "id": "sig_002",
+    "accountId": "acc_001",
+    "type": "job_posting",
+    "summary": "Meridian Analytics posted 4 new sales roles this week: 2 Account Executives (Enterprise), 1 Sales Operations Manager, and 1 Revenue Intelligence Analyst. The job descriptions mention 'building a scalable outbound motion' and 'evaluating new sales engagement tooling'.",
+    "detectedAt": "2026-03-31T14:22:00Z",
+    "strength": 8,
+    "sourceUrl": "https://jobs.meridiananalytics.io/sales"
+  },
+  {
+    "id": "sig_003",
+    "accountId": "acc_001",
+    "type": "leadership_change",
+    "summary": "Meridian Analytics hired a new VP of Sales from Outreach.io — James Hartwell, who previously led mid-market sales there. He is widely known for modernizing sales tech stacks and running structured outbound programs.",
+    "detectedAt": "2026-03-27T11:00:00Z",
+    "strength": 9,
+    "sourceUrl": "https://linkedin.com/in/jameshartwell/updates"
+  },
+  {
+    "id": "sig_004",
+    "accountId": "acc_003",
+    "type": "funding_round",
+    "summary": "Pulse Health Systems announced a $40M Series C to accelerate their enterprise go-to-market expansion into hospital networks. Investors noted the company plans to triple its sales team from 15 to 45 reps within 6 months.",
+    "detectedAt": "2026-03-30T08:00:00Z",
+    "strength": 8,
+    "sourceUrl": "https://businesswire.com/news/pulse-health-series-c"
+  },
+  {
+    "id": "sig_005",
+    "accountId": "acc_003",
+    "type": "job_posting",
+    "summary": "Pulse Health posted a Director of Sales Enablement role referencing 'building repeatable outbound sequences' and 'consolidating our sales engagement stack'. They are also hiring a SDR Team Lead to build their first dedicated outbound function.",
+    "detectedAt": "2026-04-01T10:30:00Z",
+    "strength": 7,
+    "sourceUrl": "https://pulsehealth.com/careers/sales-enablement"
+  },
+  {
+    "id": "sig_006",
+    "accountId": "acc_007",
+    "type": "competitor_churn",
+    "summary": "Multiple G2 reviews posted this week from ShieldLayer Security employees indicating dissatisfaction with their current sales engagement platform (Outreach), citing poor deliverability, complex UI, and slow support response times. One reviewer specifically mentioned they were 'evaluating alternatives'.",
+    "detectedAt": "2026-03-31T16:45:00Z",
+    "strength": 8,
+    "sourceUrl": "https://g2.com/products/outreach/reviews?company=shieldlayer"
+  },
+  {
+    "id": "sig_007",
+    "accountId": "acc_007",
+    "type": "intent_data",
+    "summary": "ShieldLayer Security employees have been heavily researching Apollo.io, Salesloft, and 'sales engagement platform comparison' over the past 10 days. Multiple unique visitors from their IP range hit comparison pages and pricing pages.",
+    "detectedAt": "2026-04-01T09:00:00Z",
+    "strength": 7,
+    "sourceUrl": "https://bombora.com/intent/shieldlayer"
+  },
+  {
+    "id": "sig_008",
+    "accountId": "acc_009",
+    "type": "tech_stack_change",
+    "summary": "Apex Cloud Solutions removed Apollo from their tech stack according to BuiltWith data updated this week. They simultaneously added job postings mentioning 'evaluating our full sales tech stack for 2026'. This suggests an active RFP or consolidation project is underway.",
+    "detectedAt": "2026-03-28T13:00:00Z",
+    "strength": 6,
+    "sourceUrl": "https://builtwith.com/website/apexcloud.io"
+  },
+  {
+    "id": "sig_009",
+    "accountId": "acc_009",
+    "type": "leadership_change",
+    "summary": "Apex Cloud Solutions promoted their top-performing mid-market AE, Janelle Kim, to VP of Sales — bypassing an external hire. Internal promotions to VP Sales often mean the new leader wants to prove themselves quickly by modernizing team infrastructure and tooling.",
+    "detectedAt": "2026-04-01T08:30:00Z",
+    "strength": 7,
+    "sourceUrl": "https://linkedin.com/company/apexcloud/posts"
+  },
+  {
+    "id": "sig_010",
+    "accountId": "acc_002",
+    "type": "job_posting",
+    "summary": "Vantage Capital Partners posted a Sales Development Representative role specifically mentioning 'experience with modern outbound sequencing tools' and 'comfort with AI-assisted prospecting'. This is their first SDR hire, signaling a new outbound motion build.",
+    "detectedAt": "2026-03-30T12:00:00Z",
+    "strength": 6,
+    "sourceUrl": "https://vantagecap.com/careers/sdr"
+  },
+  {
+    "id": "sig_011",
+    "accountId": "acc_005",
+    "type": "leadership_change",
+    "summary": "Freightwave Logistics hired a new Chief Revenue Officer from a logistics SaaS company known for high-velocity outbound sales. The new CRO, Lisa Tran, has publicly written about outbound-led growth and sales intelligence tooling on LinkedIn.",
+    "detectedAt": "2026-03-29T15:00:00Z",
+    "strength": 7,
+    "sourceUrl": "https://linkedin.com/in/lisatran-cro"
+  },
+  {
+    "id": "sig_012",
+    "accountId": "acc_010",
+    "type": "intent_data",
+    "summary": "Novara FinTech showed high intent signals this week around 'sales sequencing' and 'outbound automation' keywords. Their procurement team appears to be in evaluation mode based on the pattern and volume of research activity observed.",
+    "detectedAt": "2026-04-01T11:00:00Z",
+    "strength": 5,
+    "sourceUrl": "https://g2.com/intent-data/novara-finance"
+  },
+  {
+    "id": "sig_013",
+    "accountId": "acc_004",
+    "type": "intent_data",
+    "summary": "CartFlow Commerce employees have viewed several sales engagement platform comparison pages. Signal strength is moderate — research appears to be driven by one person, likely a sales ops analyst doing an initial scan rather than an active buying committee.",
+    "detectedAt": "2026-03-31T10:15:00Z",
+    "strength": 3,
+    "sourceUrl": "https://g2.com/intent-data/cartflow-io"
+  },
+  {
+    "id": "sig_014",
+    "accountId": "acc_003",
+    "type": "tech_stack_change",
+    "summary": "Pulse Health Systems adopted Gong for conversation intelligence this month, per BuiltWith tracking. Teams that adopt Gong often pursue a full sales stack modernization shortly after — the pattern suggests they are mid-way through a deliberate tooling upgrade cycle.",
+    "detectedAt": "2026-03-26T09:00:00Z",
+    "strength": 6,
+    "sourceUrl": "https://builtwith.com/website/pulsehealthsystems.com"
+  },
+  {
+    "id": "sig_015",
+    "accountId": "acc_007",
+    "type": "job_posting",
+    "summary": "ShieldLayer Security posted a Revenue Operations Analyst role explicitly asking for 'experience with migration from legacy sales engagement tools' and 'evaluation of Apollo, Salesloft, or Outreach alternatives'. This is an unusually direct signal of active vendor evaluation.",
+    "detectedAt": "2026-04-02T08:00:00Z",
+    "strength": 9,
+    "sourceUrl": "https://shieldlayer.io/careers/rev-ops-analyst"
+  }
+]

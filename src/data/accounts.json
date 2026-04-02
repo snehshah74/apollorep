@@ -1,0 +1,172 @@
+[
+  {
+    "id": "acc_001",
+    "company": "Meridian Analytics",
+    "domain": "meridiananalytics.io",
+    "industry": "SaaS",
+    "employees": 320,
+    "annualRevenue": "$28M",
+    "mainContact": {
+      "name": "Sarah Chen",
+      "title": "VP of Revenue Operations",
+      "email": "s.chen@meridiananalytics.io",
+      "linkedin": "linkedin.com/in/sarahchen-revops"
+    },
+    "icpScore": 9,
+    "currentStack": ["Salesforce", "Outreach", "ZoomInfo", "Gong"],
+    "lastContactedDaysAgo": 45
+  },
+  {
+    "id": "acc_002",
+    "company": "Vantage Capital Partners",
+    "domain": "vantagecap.com",
+    "industry": "FinTech",
+    "employees": 180,
+    "annualRevenue": "$120M",
+    "mainContact": {
+      "name": "Marcus Webb",
+      "title": "Head of Business Development",
+      "email": "m.webb@vantagecap.com",
+      "linkedin": "linkedin.com/in/marcuswebb-fintech"
+    },
+    "icpScore": 7,
+    "currentStack": ["HubSpot", "LinkedIn Sales Navigator", "Clearbit"],
+    "lastContactedDaysAgo": null
+  },
+  {
+    "id": "acc_003",
+    "company": "Pulse Health Systems",
+    "domain": "pulsehealthsystems.com",
+    "industry": "HealthTech",
+    "employees": 750,
+    "annualRevenue": "$65M",
+    "mainContact": {
+      "name": "Dr. Priya Nair",
+      "title": "Chief Growth Officer",
+      "email": "p.nair@pulsehealthsystems.com",
+      "linkedin": "linkedin.com/in/priyanair-healthtech"
+    },
+    "icpScore": 8,
+    "currentStack": ["Salesforce", "Marketo", "Drift"],
+    "lastContactedDaysAgo": 12
+  },
+  {
+    "id": "acc_004",
+    "company": "CartFlow Commerce",
+    "domain": "cartflow.io",
+    "industry": "E-commerce",
+    "employees": 95,
+    "annualRevenue": "$8M",
+    "mainContact": {
+      "name": "Jordan Blake",
+      "title": "Director of Partnerships",
+      "email": "j.blake@cartflow.io",
+      "linkedin": "linkedin.com/in/jordanblake-ecomm"
+    },
+    "icpScore": 5,
+    "currentStack": ["Klaviyo", "Shopify Plus", "Intercom"],
+    "lastContactedDaysAgo": 90
+  },
+  {
+    "id": "acc_005",
+    "company": "Freightwave Logistics",
+    "domain": "freightwave.co",
+    "industry": "Logistics",
+    "employees": 1200,
+    "annualRevenue": "$210M",
+    "mainContact": {
+      "name": "Tom Delgado",
+      "title": "SVP Sales & Marketing",
+      "email": "t.delgado@freightwave.co",
+      "linkedin": "linkedin.com/in/tomdelgado-logistics"
+    },
+    "icpScore": 6,
+    "currentStack": ["Salesforce", "Pardot", "SalesLoft"],
+    "lastContactedDaysAgo": 5
+  },
+  {
+    "id": "acc_006",
+    "company": "Learnly EdTech",
+    "domain": "learnly.com",
+    "industry": "EdTech",
+    "employees": 210,
+    "annualRevenue": "$18M",
+    "mainContact": {
+      "name": "Aisha Okafor",
+      "title": "VP of Growth",
+      "email": "a.okafor@learnly.com",
+      "linkedin": "linkedin.com/in/aishaokafor-edtech"
+    },
+    "icpScore": 4,
+    "currentStack": ["HubSpot", "Intercom", "Segment"],
+    "lastContactedDaysAgo": null
+  },
+  {
+    "id": "acc_007",
+    "company": "ShieldLayer Security",
+    "domain": "shieldlayer.io",
+    "industry": "CyberSecurity",
+    "employees": 430,
+    "annualRevenue": "$52M",
+    "mainContact": {
+      "name": "Ryan Kosta",
+      "title": "Chief Revenue Officer",
+      "email": "r.kosta@shieldlayer.io",
+      "linkedin": "linkedin.com/in/ryankosta-security"
+    },
+    "icpScore": 8,
+    "currentStack": ["Salesforce", "Outreach", "Demandbase"],
+    "lastContactedDaysAgo": 30
+  },
+  {
+    "id": "acc_008",
+    "company": "GrowthPulse MarTech",
+    "domain": "growthpulse.ai",
+    "industry": "MarTech",
+    "employees": 130,
+    "annualRevenue": "$11M",
+    "mainContact": {
+      "name": "Nina Patel",
+      "title": "Co-founder & CEO",
+      "email": "nina@growthpulse.ai",
+      "linkedin": "linkedin.com/in/ninapatel-martech"
+    },
+    "icpScore": 3,
+    "currentStack": ["Pipedrive", "Mailchimp", "Zapier"],
+    "lastContactedDaysAgo": 180
+  },
+  {
+    "id": "acc_009",
+    "company": "Apex Cloud Solutions",
+    "domain": "apexcloud.io",
+    "industry": "SaaS",
+    "employees": 680,
+    "annualRevenue": "$89M",
+    "mainContact": {
+      "name": "Derek Huang",
+      "title": "VP of Sales",
+      "email": "d.huang@apexcloud.io",
+      "linkedin": "linkedin.com/in/derekhuang-saas"
+    },
+    "icpScore": 9,
+    "currentStack": ["Salesforce", "Apollo", "Gong", "Clari"],
+    "lastContactedDaysAgo": 60
+  },
+  {
+    "id": "acc_010",
+    "company": "Novara FinTech",
+    "domain": "novara.finance",
+    "industry": "FinTech",
+    "employees": 2000,
+    "annualRevenue": "$340M",
+    "mainContact": {
+      "name": "Claire Fontaine",
+      "title": "SVP Revenue",
+      "email": "c.fontaine@novara.finance",
+      "linkedin": "linkedin.com/in/clairefontaine-finance"
+    },
+    "icpScore": 7,
+    "currentStack": ["Salesforce", "Marketo", "6sense", "Outreach"],
+    "lastContactedDaysAgo": 20
+  }
+]

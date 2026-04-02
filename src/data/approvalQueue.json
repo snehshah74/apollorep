@@ -1,0 +1,74 @@
+[
+  {
+    "id": "action_demo_001",
+    "action": "send_cold_email",
+    "risk": "high",
+    "accountId": "acc_001",
+    "companyName": "Meridian Analytics",
+    "payload": {
+      "contactEmail": "s.chen@meridiananalytics.io",
+      "contactName": "Sarah Chen",
+      "subject": "The $22M round + doubling sales headcount",
+      "body": "Sarah — congrats on the Series B. Companies that double sales headcount in 90 days usually hit a wall around month 4 when the tooling can't keep up with rep volume. Apollo solves exactly that. 15 minutes this week?",
+      "htmlBody": "<p>Sarah — congrats on the Series B. Companies that double sales headcount in 90 days usually hit a wall around month 4 when the tooling can't keep up with rep volume. <strong>Apollo solves exactly that. 15 minutes this week?</strong></p>",
+      "triggerSignal": "$22M Series B closed March 28th, earmarked for GTM expansion — CEO publicly stated plans to double sales org in 90 days.",
+      "confidence": 9
+    },
+    "preview": "Send cold email to Sarah Chen at Meridian Analytics",
+    "createdAt": "2026-04-02T19:00:00.000Z",
+    "status": "pending"
+  },
+  {
+    "id": "action_demo_002",
+    "action": "send_cold_email",
+    "risk": "high",
+    "accountId": "acc_007",
+    "companyName": "ShieldLayer Security",
+    "payload": {
+      "contactEmail": "r.kosta@shieldlayer.io",
+      "contactName": "Ryan Kosta",
+      "subject": "ShieldLayer's RevOps role + 'migration from legacy tools'",
+      "body": "Ryan — saw the RevOps Analyst posting asking for 'experience migrating from legacy sales engagement tools'. That's a rare signal. If Outreach is the legacy tool in question, happy to walk you through what the switch looks like in practice. Worth 20 minutes?",
+      "htmlBody": "<p>Ryan — saw the RevOps Analyst posting asking for 'experience migrating from legacy sales engagement tools'. That's a rare signal. If Outreach is the legacy tool in question, happy to walk you through what the switch looks like in practice. <strong>Worth 20 minutes?</strong></p>",
+      "triggerSignal": "Job posting explicitly requests 'experience with migration from legacy sales engagement tools and evaluation of Apollo, Salesloft, or Outreach alternatives'.",
+      "confidence": 8
+    },
+    "preview": "Send cold email to Ryan Kosta at ShieldLayer Security",
+    "createdAt": "2026-04-02T19:01:00.000Z",
+    "status": "pending"
+  },
+  {
+    "id": "action_demo_003",
+    "action": "send_cold_email",
+    "risk": "high",
+    "accountId": "acc_003",
+    "companyName": "Pulse Health Systems",
+    "payload": {
+      "contactEmail": "p.nair@pulsehealthsystems.com",
+      "contactName": "Dr. Priya Nair",
+      "subject": "Tripling a sales team in 6 months — the part nobody warns you about",
+      "body": "Priya — the $40M Series C announcement mentioned tripling the sales team from 15 to 45 reps. The tooling decision you make in month 1 determines whether month 6 is chaos or compound growth. 15 minutes to show you how teams your size have done it?",
+      "htmlBody": "<p>Priya — the $40M Series C announcement mentioned tripling the sales team from 15 to 45 reps. The tooling decision you make in month 1 determines whether month 6 is chaos or compound growth. <strong>15 minutes to show you how teams your size have done it?</strong></p>",
+      "triggerSignal": "$40M Series C announced with explicit plan to triple sales team from 15 to 45 reps within 6 months.",
+      "confidence": 8
+    },
+    "preview": "Send cold email to Dr. Priya Nair at Pulse Health Systems",
+    "createdAt": "2026-04-02T19:02:00.000Z",
+    "status": "pending"
+  },
+  {
+    "id": "action_demo_004",
+    "action": "send_daily_brief",
+    "risk": "medium",
+    "accountId": "system",
+    "companyName": "Daily Brief",
+    "payload": {
+      "briefHtml": "<p>Daily brief ready</p>",
+      "leadCount": 5,
+      "draftCount": 3
+    },
+    "preview": "Send daily brief to rep — 5 leads, 3 drafts ready",
+    "createdAt": "2026-04-02T19:03:00.000Z",
+    "status": "pending"
+  }
+]

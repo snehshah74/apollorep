@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApolloRep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #111118;
+      --bg-card: #16161e;
+      --bg-hover: #1c1c26;
+      --border: #2a2a3a;
+      --border-light: #1e1e2e;
+      --text-primary: #e8e8f0;
+      --text-secondary: #8888aa;
+      --text-muted: #55556a;
+      --accent-blue: #4f8ef7;
+      --accent-green: #3ecf8e;
+      --accent-red: #f75f5f;
+      --accent-amber: #f7b84f;
+      --accent-purple: #a78bfa;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ─── Layout ──────────────────────────────────────────── */
+    .app { display: flex; height: 100vh; overflow: hidden; }
+
+    /* ─── Sidebar ─────────────────────────────────────────── */
+    .sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      transition: width 0.2s ease, min-width 0.2s ease;
+    }
+    .sidebar.collapsed { width: 52px; min-width: 52px; }
+
+    .sidebar-header {
+      padding: 20px 16px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .logo-icon {
+      width: 28px; height: 28px; min-width: 28px;
+      background: var(--accent-blue);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 13px; color: white;
+    }
+    .logo-text { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+    .logo-badge {
+      font-size: 10px; color: var(--text-muted);
+      background: var(--bg-hover);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: 2px;
+    }
+    .sidebar.collapsed .logo-text,
+    .sidebar.collapsed .logo-badge { display: none; }
+
+    .nav { padding: 10px 8px; flex: 1; overflow: hidden; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 10px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.12s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 2px;
+      border: 1px solid transparent;
+    }
+    .nav-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .nav-item.active {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+      border-left: 2px solid var(--accent-blue);
+    }
+    .nav-icon { font-size: 15px; min-width: 18px; text-align: center; }
+    .nav-label { flex: 1; }
+    .sidebar.collapsed .nav-label { display: none; }
+    .nav-badge {
+      background: var(--accent-red);
+      color: white;
+      border-radius: 10px;
+      min-width: 18px;
+      height: 18px;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 5px;
+    }
+    .sidebar.collapsed .nav-badge { display: none; }
+
+    .sidebar-bottom {
+      border-top: 1px solid var(--border);
+      padding: 14px 16px;
+      overflow: hidden;
+    }
+    .sidebar.collapsed .sidebar-bottom { padding: 14px 12px; }
+    .trust-indicator { display: flex; align-items: center; gap: 8px; }
+    .trust-dot {
+      width: 8px; height: 8px; min-width: 8px;
+      border-radius: 50%;
+      box-shadow: 0 0 6px currentColor;
+    }
+    .trust-dot.l1 { background: var(--accent-red); color: var(--accent-red); }
+    .trust-dot.l2 { background: var(--accent-amber); color: var(--accent-amber); }
+    .trust-dot.l3 { background: var(--accent-green); color: var(--accent-green); }
+    .trust-text { flex: 1; overflow: hidden; }
+    .trust-level-line { font-size: 12px; font-weight: 500; color: var(--text-primary); white-space: nowrap; }
+    .trust-name-line { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+    .sidebar.collapsed .trust-text { display: none; }
+    .trust-change-btn {
+      font-size: 11px; color: var(--accent-blue); cursor: pointer;
+      background: none; border: none; padding: 0;
+      text-decoration: none;
+    }
+    .trust-change-btn:hover { text-decoration: underline; }
+    .sidebar.collapsed .trust-change-btn { display: none; }
+
+    .collapse-btn {
+      width: 100%; background: none; border: none;
+      padding: 10px 16px;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      text-align: left;
+      display: flex; align-items: center; gap: 8px;
+      transition: color 0.12s;
+      border-top: 1px solid var(--border);
+    }
+    .collapse-btn:hover { color: var(--text-secondary); }
+    .sidebar.collapsed .collapse-btn-label { display: none; }
+
+    /* ─── Main ────────────────────────────────────────────── */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    .topbar {
+      height: 52px; min-height: 52px;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+    }
+    .topbar-title { font-size: 14px; font-weight: 500; flex: 1; color: var(--text-primary); }
+    .topbar-meta {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .last-run { font-size: 12px; color: var(--text-muted); }
+    .refresh-pill {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .run-btn {
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--accent-blue);
+      border-radius: 6px;
+      color: var(--accent-blue);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.12s;
+    }
+    .run-btn:hover { background: rgba(79,142,247,0.1); }
+    .run-btn:active { transform: scale(0.97); }
+
+    .content { flex: 1; overflow-y: auto; padding: 24px; }
+
+    /* ─── Stats row ───────────────────────────────────────── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+    .stat-value { font-size: 26px; font-weight: 500; color: var(--text-primary); line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+
+    /* ─── Section header ──────────────────────────────────── */
+    .section-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 500; }
+    .section-count { font-size: 12px; color: var(--text-muted); background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1px 8px; }
+
+    /* ─── Action card ─────────────────────────────────────── */
+    .action-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 12px;
+      transition: all 0.15s ease;
+    }
+    .action-card:hover {
+      border-color: var(--border-light);
+      background: var(--bg-hover);
+      transform: translateY(-1px);
+    }
+    .card-collapsing {
+      animation: collapseCard 0.3s ease forwards;
+      overflow: hidden;
+    }
+    @keyframes collapseCard {
+      0% { opacity: 1; max-height: 500px; margin-bottom: 12px; padding: 20px; }
+      70% { opacity: 0; }
+      100% { opacity: 0; max-height: 0; margin-bottom: 0; padding: 0; border-width: 0; }
+    }
+
+    /* Card row 1: header */
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+    .card-company { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+    .card-action-type { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    .risk-badge {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+    .risk-high { background: #2a1010; color: #f75f5f; border: 1px solid #3d1515; }
+    .risk-medium { background: #2a2210; color: #f7b84f; border: 1px solid #3d3015; }
+    .risk-low { background: #0d2a1a; color: #3ecf8e; border: 1px solid #0f3d25; }
+
+    /* Card row 2: meta */
+    .card-meta {
+      display: flex; align-items: center; gap: 0;
+      margin-bottom: 12px;
+      font-size: 12px; color: var(--text-secondary);
+    }
+    .meta-sep { margin: 0 8px; color: var(--border); }
+
+    /* Card row 3: signal block */
+    .signal-block {
+      border-left: 3px solid var(--accent-blue);
+      background: rgba(79, 142, 247, 0.06);
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 12px;
+    }
+    .signal-label {
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .signal-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Card row 4: confidence */
+    .conf-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .conf-label { font-size: 12px; color: var(--text-muted); width: 76px; }
+    .conf-track {
+      flex: 1; height: 4px; background: var(--border);
+      border-radius: 2px; overflow: hidden;
+    }
+    .conf-fill { height: 4px; border-radius: 2px; transition: width 0.4s ease; }
+    .conf-score { font-size: 12px; font-weight: 500; color: var(--accent-amber); width: 36px; text-align: right; }
+
+    /* Card row 5: preview toggle */
+    .preview-toggle-btn {
+      background: none; border: none;
+      color: var(--accent-blue);
+      font-size: 12px; font-family: inherit;
+      cursor: pointer; padding: 0;
+      display: flex; align-items: center; gap: 4px;
+      margin-bottom: 0;
+      transition: color 0.12s;
+    }
+    .preview-toggle-btn:hover { color: #7aadff; }
+
+    .preview-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+    .preview-panel.open { max-height: 400px; }
+    .preview-inner {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 10px;
+      margin-bottom: 2px;
+    }
+    .preview-subject { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 10px; }
+    .preview-divider { height: 1px; background: var(--border); margin-bottom: 10px; }
+    .preview-body-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+    .preview-footer { text-align: right; margin-top: 10px; }
+    .ai-label { font-size: 11px; color: var(--text-muted); }
+
+    /* Card row 6: actions */
+    .card-actions {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 14px;
+    }
+    .action-btns { display: flex; gap: 8px; }
+    .btn {
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.12s ease;
+      display: flex; align-items: center; gap: 6px;
+      min-width: 88px;
+      justify-content: center;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-approve {
+      background: rgba(62, 207, 142, 0.12);
+      color: #3ecf8e;
+      border: 1px solid rgba(62, 207, 142, 0.3);
+    }
+    .btn-approve:hover:not(:disabled) { background: rgba(62, 207, 142, 0.2); border-color: rgba(62,207,142,0.5); }
+
+    .btn-reject {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .btn-reject:hover:not(:disabled) { color: var(--accent-red); border-color: rgba(247, 95, 95, 0.4); }
+
+    .view-account-link { font-size: 12px; color: var(--text-muted); cursor: pointer; }
+    .view-account-link:hover { color: var(--text-secondary); }
+
+    /* Rejection form */
+    .rejection-form {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.2s ease;
+    }
+    .rejection-form.open { max-height: 200px; }
+    .rejection-inner {
+      background: rgba(247, 95, 95, 0.05);
+      border: 1px solid rgba(247, 95, 95, 0.2);
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 10px;
+    }
+    .rejection-inner textarea {
+      width: 100%; background: var(--bg-secondary);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 10px; font-size: 13px; color: var(--text-primary);
+      font-family: inherit; resize: vertical; min-height: 60px;
+      margin-bottom: 10px;
+    }
+    .rejection-inner textarea::placeholder { color: var(--text-muted); }
+    .rejection-inner textarea:focus { outline: none; border-color: var(--accent-red); }
+    .rejection-form-btns { display: flex; gap: 8px; }
+    .btn-confirm-reject {
+      padding: 6px 14px; border-radius: 6px; font-size: 13px;
+      font-weight: 500; cursor: pointer; font-family: inherit;
+      background: rgba(247,95,95,0.15); color: var(--accent-red);
+      border: 1px solid rgba(247,95,95,0.3);
+      transition: all 0.12s;
+    }
+    .btn-confirm-reject:hover { background: rgba(247,95,95,0.25); }
+    .btn-cancel-reject {
+      padding: 6px 14px; border-radius: 6px; font-size: 13px;
+      font-weight: 500; cursor: pointer; font-family: inherit;
+      background: none; color: var(--text-secondary); border: none;
+    }
+    .btn-cancel-reject:hover { color: var(--text-primary); }
+
+    /* Inline card error */
+    .card-error { font-size: 12px; color: var(--accent-red); margin-top: 8px; display: none; }
+
+    /* ─── Flash border ────────────────────────────────────── */
+    .flash-green { animation: flashGreen 0.4s ease; }
+    .flash-red { animation: flashRed 0.4s ease; }
+    @keyframes flashGreen {
+      0%, 100% { border-color: var(--border); }
+      50% { border-color: var(--accent-green); box-shadow: 0 0 0 1px var(--accent-green); }
+    }
+    @keyframes flashRed {
+      0%, 100% { border-color: var(--border); }
+      50% { border-color: var(--accent-red); box-shadow: 0 0 0 1px var(--accent-red); }
+    }
+
+    /* ─── Spinner ─────────────────────────────────────────── */
+    .spinner {
+      width: 13px; height: 13px;
+      border: 2px solid rgba(62,207,142,0.25);
+      border-top-color: #3ecf8e;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    .btn-reject .spinner { border-color: rgba(136,136,170,0.25); border-top-color: var(--text-secondary); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Empty state ─────────────────────────────────────── */
+    .empty-state {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center;
+      padding: 80px 32px; text-align: center;
+    }
+    .empty-icon { margin-bottom: 20px; }
+    .empty-title { font-size: 16px; font-weight: 500; color: var(--text-secondary); margin-bottom: 8px; }
+    .empty-sub { font-size: 13px; color: var(--text-muted); max-width: 300px; line-height: 1.6; }
+    .empty-action { margin-top: 20px; }
+
+    /* ─── All Actions table ───────────────────────────────── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      padding: 10px 14px; text-align: left;
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted);
+      font-weight: 500; border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 12px 14px; font-size: 13px;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: middle; color: var(--text-secondary);
+    }
+    .data-table tr:hover td { background: var(--bg-hover); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .td-company { font-weight: 500; color: var(--text-primary); }
+
+    .status-pill {
+      padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .sp-pending { background: #1a1a2e; color: #8888aa; }
+    .sp-approved { background: #0d2a1a; color: #3ecf8e; }
+    .sp-rejected { background: #2a1010; color: #f75f5f; }
+
+    /* ─── Audit timeline ──────────────────────────────────── */
+    .timeline { padding: 4px 0; }
+    .timeline-item {
+      display: flex; gap: 16px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 6px; top: 18px;
+      width: 1px; bottom: 0;
+      background: var(--border);
+    }
+    .timeline-item:last-child::before { display: none; }
+    .tl-dot-wrap { padding-top: 3px; position: relative; z-index: 1; }
+    .tl-dot {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-secondary);
+    }
+    .tl-dot.approved { background: var(--accent-green); }
+    .tl-dot.rejected { background: var(--accent-red); }
+    .tl-dot.auto_executed { background: var(--accent-blue); }
+    .tl-dot.queued { background: var(--accent-amber); }
+    .tl-body { flex: 1; }
+    .tl-title { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+    .tl-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
+    .tl-result { font-size: 12px; color: var(--text-secondary); }
+    .tl-time { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ─── Trust settings panel ────────────────────────────── */
+    .trust-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+    }
+    .trust-overlay.open { display: block; }
+    .trust-panel {
+      position: fixed; top: 0; right: -380px;
+      width: 360px; height: 100vh;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border);
+      padding: 24px;
+      z-index: 201;
+      transition: right 0.25s ease;
+      overflow-y: auto;
+    }
+    .trust-panel.open { right: 0; }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .panel-title { font-size: 15px; font-weight: 500; }
+    .panel-close {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 18px; cursor: pointer; padding: 4px;
+      line-height: 1;
+    }
+    .panel-close:hover { color: var(--text-primary); }
+
+    .trust-level-card {
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 16px;
+      margin-bottom: 10px; cursor: default;
+    }
+    .trust-level-card.active { border-color: var(--accent-blue); background: rgba(79,142,247,0.05); }
+    .tlc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .tlc-num { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .tlc-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .tlc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    .trust-panel-note {
+      margin-top: 20px;
+      background: rgba(247,184,79,0.08);
+      border: 1px solid rgba(247,184,79,0.2);
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ─── Toasts ──────────────────────────────────────────── */
+    .toast-container {
+      position: fixed; bottom: 24px; right: 24px;
+      z-index: 999;
+      display: flex; flex-direction: column; gap: 8px;
+      align-items: flex-end;
+    }
+    .toast {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      min-width: 280px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px;
+      animation: slideToast 0.2s ease-out;
+    }
+    .toast-success { border-left: 3px solid var(--accent-green); }
+    .toast-error { border-left: 3px solid var(--accent-red); }
+    @keyframes slideToast {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .toast-icon { font-size: 14px; }
+
+    /* ─── Loading skeleton ────────────────────────────────── */
+    .skeleton {
+      background: linear-gradient(90deg, #1e1e28 25%, #24242f 50%, #1e1e28 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.3s infinite;
+      border-radius: 4px;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    .skeleton-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; margin-bottom: 12px;
+    }
+    .sk-line { height: 13px; margin-bottom: 10px; }
+    .sk-w-60 { width: 60%; }
+    .sk-w-40 { width: 40%; }
+    .sk-w-80 { width: 80%; }
+    .sk-w-100 { width: 100%; }
+
+    /* ─── Error state ─────────────────────────────────────── */
+    .error-state {
+      background: rgba(247,95,95,0.06);
+      border: 1px solid rgba(247,95,95,0.2);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      color: var(--accent-red);
+    }
+    .error-state h3 { margin-bottom: 8px; font-size: 15px; }
+    .error-state p { font-size: 13px; color: var(--text-secondary); }
+
+    /* ─── Responsive ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .sidebar { width: 52px; min-width: 52px; }
+      .sidebar .nav-label, .sidebar .logo-text, .sidebar .logo-badge,
+      .sidebar .trust-text, .sidebar .trust-change-btn,
+      .sidebar .collapse-btn-label { display: none; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ─── Sidebar ─────────────────────────────────────── -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">A</div>
+      <span class="logo-text">ApolloRep</span>
+      <span class="logo-badge">v1.0</span>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-item active" id="nav-queue" onclick="showView('queue')">
+        <span class="nav-icon">◈</span>
+        <span class="nav-label">Queue</span>
+        <span class="nav-badge" id="queueBadge">0</span>
+      </div>
+      <div class="nav-item" id="nav-all" onclick="showView('all')">
+        <span class="nav-icon">☰</span>
+        <span class="nav-label">All Actions</span>
+      </div>
+      <div class="nav-item" id="nav-audit" onclick="showView('audit')">
+        <span class="nav-icon">◎</span>
+        <span class="nav-label">Audit Log</span>
+      </div>
+      <div class="nav-item" id="nav-trust" onclick="openTrustPanel()">
+        <span class="nav-icon">⬡</span>
+        <span class="nav-label">Trust Settings</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="trust-indicator">
+        <div class="tl-dot-wrap"><div class="trust-dot" id="trustDot"></div></div>
+        <div class="trust-text">
+          <div class="trust-level-line" id="trustLevelLine">Level —</div>
+          <div class="trust-name-line" id="trustNameLine">Loading...</div>
+        </div>
+        <button class="trust-change-btn" onclick="openTrustPanel()">change</button>
+      </div>
+    </div>
+
+    <button class="collapse-btn" onclick="toggleSidebar()">
+      <span id="collapseIcon">◁</span>
+      <span class="collapse-btn-label">Collapse</span>
+    </button>
+  </div>
+
+  <!-- ─── Main ─────────────────────────────────────────── -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Queue</div>
+      <div class="topbar-meta">
+        <span class="last-run" id="lastRunLabel"></span>
+        <div class="refresh-pill">
+          <span>↻</span>
+          <span id="countdown">30s</span>
+        </div>
+        <button class="run-btn" onclick="triggerPipeline()">Run Pipeline</button>
+      </div>
+    </div>
+
+    <div class="content" id="mainContent">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ─── Trust Settings Panel ────────────────────────── -->
+<div class="trust-overlay" id="trustOverlay" onclick="closeTrustPanel()"></div>
+<div class="trust-panel" id="trustPanel">
+  <div class="panel-header">
+    <div class="panel-title">Trust Settings</div>
+    <button class="panel-close" onclick="closeTrustPanel()">✕</button>
+  </div>
+  <div id="trustPanelContent">
+    <div class="trust-level-card" id="tlc-1">
+      <div class="tlc-header"><span class="tlc-num">1</span><span class="tlc-name">Supervised</span></div>
+      <div class="tlc-desc">Every action pauses for your review before executing. Nothing touches prospects without your sign-off.</div>
+    </div>
+    <div class="trust-level-card" id="tlc-2">
+      <div class="tlc-header"><span class="tlc-num">2</span><span class="tlc-name">Semi-Autonomous</span></div>
+      <div class="tlc-desc">Low and medium-risk actions (scoring, briefing) run automatically. Cold emails to prospects still require approval.</div>
+    </div>
+    <div class="trust-level-card" id="tlc-3">
+      <div class="tlc-header"><span class="tlc-num">3</span><span class="tlc-name">Autonomous</span></div>
+      <div class="tlc-desc">The agent acts fully on your behalf. All actions within policy execute automatically. The audit trail always records everything.</div>
+    </div>
+    <div class="trust-panel-note">
+      Trust level is set via <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;">TRUST_LEVEL</code> in your <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;">.env</code> file. Restart the server to apply changes. This is intentional — trust is an admin-level decision, not something a rep changes on the fly.
+    </div>
+  </div>
+</div>
+
+<!-- ─── Toast container ─────────────────────────── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+  // ─── State ──────────────────────────────────────────────
+  const API = '';
+  let allActions = [];
+  let auditEntries = [];
+  let trustData = { level: 1, description: '' };
+  let currentView = 'queue';
+  let countdownSecs = 30;
+  let countdownTimer;
+  let sidebarCollapsed = false;
+  let lastLoadTime = null;
+
+  // ─── Sidebar ─────────────────────────────────────────────
+  function toggleSidebar() {
+    sidebarCollapsed = !sidebarCollapsed;
+    document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
+    document.getElementById('collapseIcon').textContent = sidebarCollapsed ? '▷' : '◁';
+  }
+
+  // ─── View switching ───────────────────────────────────────
+  function showView(view) {
+    currentView = view;
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    const navEl = document.getElementById(`nav-${view}`);
+    if (navEl) navEl.classList.add('active');
+    const titles = { queue: 'Queue', all: 'All Actions', audit: 'Audit Log' };
+    document.getElementById('topbarTitle').textContent = titles[view] || view;
+    renderView();
+  }
+
+  // ─── Toast ────────────────────────────────────────────────
+  function toast(msg, type = 'success') {
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = `toast toast-${type}`;
+    t.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span><span>${msg}</span>`;
+    c.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 4000);
+  }
+
+  // ─── Trust panel ─────────────────────────────────────────
+  function openTrustPanel() {
+    document.getElementById('trustOverlay').classList.add('open');
+    document.getElementById('trustPanel').classList.add('open');
+  }
+  function closeTrustPanel() {
+    document.getElementById('trustOverlay').classList.remove('open');
+    document.getElementById('trustPanel').classList.remove('open');
+  }
+
+  // ─── Time helpers ─────────────────────────────────────────
+  function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const s = Math.floor(diff / 1000);
+    if (s < 60) return `${s}s ago`;
+    const m = Math.floor(s / 60);
+    if (m < 60) return `${m}m ago`;
+    const h = Math.floor(m / 60);
+    if (h < 24) return `${h}h ago`;
+    return `${Math.floor(h / 24)}d ago`;
+  }
+  function fmtDate(dateStr) {
+    return new Date(dateStr).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function actionLabel(a) {
+    const m = { send_cold_email: 'Send Cold Email', send_daily_brief: 'Send Daily Brief', score_lead: 'Score Lead', draft_outreach: 'Draft Outreach', compose_brief: 'Compose Brief', schedule_followup: 'Schedule Follow-up', enroll_sequence: 'Enroll in Sequence', book_meeting: 'Book Meeting' };
+    return m[a] || a;
+  }
+
+  // ─── Update sidebar trust display ─────────────────────────
+  function updateTrustDisplay(level, desc) {
+    const dot = document.getElementById('trustDot');
+    dot.className = `trust-dot l${level}`;
+    document.getElementById('trustLevelLine').textContent = `Level ${level}`;
+    const names = { 1: 'Supervised', 2: 'Semi-Autonomous', 3: 'Autonomous' };
+    document.getElementById('trustNameLine').textContent = names[level] || '';
+    // Update trust panel cards
+    [1,2,3].forEach(n => {
+      document.getElementById(`tlc-${n}`).classList.toggle('active', n === level);
+    });
+  }
+
+  // ─── Stats ────────────────────────────────────────────────
+  function computeStats(actions) {
+    const pending = actions.filter(a => a.status === 'pending').length;
+    const approved = actions.filter(a => a.status === 'approved').length;
+    const rejected = actions.filter(a => a.status === 'rejected').length;
+    const confs = actions.filter(a => a.payload && a.payload.confidence).map(a => a.payload.confidence);
+    const avgConf = confs.length ? (confs.reduce((a,b) => a+b,0) / confs.length).toFixed(1) : '—';
+    return { pending, approved, rejected, avgConf };
+  }
+
+  // ─── Render queue card ────────────────────────────────────
+  function buildCard(action) {
+    const p = action.payload || {};
+    const hasPreview = (action.action === 'send_cold_email' && p.subject) || action.action === 'send_daily_brief';
+    const conf = p.confidence;
+    const confW = conf ? conf * 10 : 0;
+    const confColor = conf >= 8 ? 'var(--accent-green)' : conf >= 6 ? 'var(--accent-amber)' : 'var(--accent-red)';
+
+    const previewHtml = hasPreview ? `
+      <div style="margin-top: 10px; margin-bottom: 10px;">
+        <button class="preview-toggle-btn" onclick="togglePreview('${action.id}')">
+          <span id="ptarrow-${action.id}">▸</span> Show draft
+        </button>
+        <div class="preview-panel" id="pp-${action.id}">
+          <div class="preview-inner">
+            ${action.action === 'send_cold_email' ? `
+              <div class="preview-subject">Subject: ${p.subject || ''}</div>
+              <div class="preview-divider"></div>
+              <div class="preview-body-text">${(p.body || '').replace(/\n/g,'<br>')}</div>
+            ` : `
+              <div class="preview-subject">Daily Brief</div>
+              <div class="preview-divider"></div>
+              <div class="preview-body-text">${p.leadCount || 0} leads · ${p.draftCount || 0} drafts ready · ${(p.briefHtml || '').length} chars HTML</div>
+            `}
+            <div class="preview-footer"><span class="ai-label">AI generated · Gemini 2.0 Flash</span></div>
+          </div>
+        </div>
+      </div>` : '';
+
+    const confHtml = conf !== undefined ? `
+      <div class="conf-row">
+        <span class="conf-label">Confidence</span>
+        <div class="conf-track"><div class="conf-fill" style="width:${confW}%; background: linear-gradient(90deg, var(--accent-amber), ${confColor});"></div></div>
+        <span class="conf-score">${conf}/10</span>
+      </div>` : '';
+
+    const triggerText = p.triggerSignal || action.preview || '';
+
+    return `
+    <div class="action-card" id="card-${action.id}">
+      <div class="card-header">
+        <div>
+          <div class="card-company">${action.companyName}</div>
+          <div class="card-action-type">${actionLabel(action.action)}</div>
+        </div>
+        <span class="risk-badge risk-${action.risk}">${action.risk}</span>
+      </div>
+
+      <div class="card-meta">
+        ${p.contactEmail ? `<span>To: ${p.contactEmail}</span><span class="meta-sep">·</span>` : ''}
+        ${p.contactName ? `<span>${p.contactName}</span><span class="meta-sep">·</span>` : ''}
+        <span>${timeAgo(action.createdAt)}</span>
+      </div>
+
+      ${triggerText ? `
+      <div class="signal-block">
+        <div class="signal-label">Trigger Signal</div>
+        <div class="signal-text">${triggerText}</div>
+      </div>` : ''}
+
+      ${confHtml}
+      ${previewHtml}
+
+      <div class="card-error" id="cerr-${action.id}"></div>
+
+      <div class="card-actions">
+        <div class="action-btns">
+          <button class="btn btn-approve" id="abtn-${action.id}" onclick="handleApprove('${action.id}')">✓ Approve</button>
+          <button class="btn btn-reject" id="rbtn-${action.id}" onclick="showRejectForm('${action.id}')">✗ Reject</button>
+        </div>
+        <span class="view-account-link">View account →</span>
+      </div>
+
+      <div class="rejection-form" id="rf-${action.id}">
+        <div class="rejection-inner">
+          <textarea id="rnotes-${action.id}" placeholder="Add a note (optional)..." rows="2"></textarea>
+          <div class="rejection-form-btns">
+            <button class="btn-confirm-reject" onclick="handleReject('${action.id}')">Confirm rejection</button>
+            <button class="btn-cancel-reject" onclick="hideRejectForm('${action.id}')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function togglePreview(id) {
+    const pp = document.getElementById(`pp-${id}`);
+    const arrow = document.getElementById(`ptarrow-${id}`);
+    const btn = arrow.parentElement;
+    const isOpen = pp.classList.contains('open');
+    pp.classList.toggle('open', !isOpen);
+    arrow.textContent = isOpen ? '▸' : '▾';
+    btn.childNodes[1].textContent = isOpen ? ' Show draft' : ' Hide draft';
+  }
+
+  function showRejectForm(id) {
+    document.getElementById(`rf-${id}`).classList.add('open');
+    document.getElementById(`rbtn-${id}`).style.display = 'none';
+  }
+  function hideRejectForm(id) {
+    document.getElementById(`rf-${id}`).classList.remove('open');
+    document.getElementById(`rbtn-${id}`).style.display = '';
+  }
+
+  function setCardError(id, msg) {
+    const el = document.getElementById(`cerr-${id}`);
+    if (el) { el.textContent = msg; el.style.display = msg ? 'block' : 'none'; }
+  }
+
+  function removeCard(id, type) {
+    const card = document.getElementById(`card-${id}`);
+    if (!card) return;
+    card.classList.add(type === 'approve' ? 'flash-green' : 'flash-red');
+    setTimeout(() => {
+      card.classList.add('card-collapsing');
+      setTimeout(() => { card.remove(); updateQueueBadge(); updateStats(); }, 320);
+    }, 200);
+  }
+
+  // ─── Approve ──────────────────────────────────────────────
+  async function handleApprove(id) {
+    const abtn = document.getElementById(`abtn-${id}`);
+    const rbtn = document.getElementById(`rbtn-${id}`);
+    abtn.disabled = true; rbtn.disabled = true;
+    abtn.innerHTML = '<div class="spinner"></div>';
+    setCardError(id, '');
+    try {
+      const res = await fetch(`${API}/api/approve/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Approval failed');
+      toast('Action approved and executed', 'success');
+      removeCard(id, 'approve');
+      loadData();
+    } catch (e) {
+      abtn.disabled = false; rbtn.disabled = false;
+      abtn.innerHTML = '✓ Approve';
+      setCardError(id, e.message);
+      toast(e.message, 'error');
+    }
+  }
+
+  // ─── Reject ───────────────────────────────────────────────
+  async function handleReject(id) {
+    const notes = document.getElementById(`rnotes-${id}`).value;
+    const confirmBtn = document.querySelector(`#rf-${id} .btn-confirm-reject`);
+    confirmBtn.disabled = true; confirmBtn.textContent = 'Rejecting...';
+    setCardError(id, '');
+    try {
+      const res = await fetch(`${API}/api/reject/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ notes }) });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Rejection failed');
+      toast('Action rejected', 'success');
+      removeCard(id, 'reject');
+      loadData();
+    } catch (e) {
+      confirmBtn.disabled = false; confirmBtn.textContent = 'Confirm rejection';
+      setCardError(id, e.message);
+      toast(e.message, 'error');
+    }
+  }
+
+  // ─── Update badge ─────────────────────────────────────────
+  function updateQueueBadge() {
+    const pending = allActions.filter(a => a.status === 'pending').length;
+    document.getElementById('queueBadge').textContent = pending;
+  }
+
+  function updateStats() {
+    if (currentView === 'queue') renderView();
+  }
+
+  // ─── Render views ─────────────────────────────────────────
+  function renderView() {
+    const el = document.getElementById('mainContent');
+    if (currentView === 'queue') renderQueue(el);
+    else if (currentView === 'all') renderAll(el);
+    else if (currentView === 'audit') renderAudit(el);
+  }
+
+  function renderQueue(el) {
+    const pending = allActions.filter(a => a.status === 'pending');
+    const stats = computeStats(allActions);
+
+    const statsHtml = `
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-value">${stats.pending}</div><div class="stat-label">Pending</div></div>
+      <div class="stat-card"><div class="stat-value">${stats.approved}</div><div class="stat-label">Approved</div></div>
+      <div class="stat-card"><div class="stat-value">${stats.rejected}</div><div class="stat-label">Rejected</div></div>
+      <div class="stat-card"><div class="stat-value">${stats.avgConf}</div><div class="stat-label">Avg Confidence</div></div>
+    </div>`;
+
+    if (pending.length === 0) {
+      el.innerHTML = statsHtml + `
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="1.5">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+          <div class="empty-title">Queue is clear</div>
+          <div class="empty-sub">All actions have been reviewed. ApolloRep is monitoring for new signals.</div>
+          <div class="empty-action">
+            <button class="run-btn" onclick="triggerPipeline()">Run Pipeline</button>
+          </div>
+        </div>`;
+      return;
+    }
+
+    el.innerHTML = statsHtml + `
+    <div class="section-header">
+      <span class="section-title">Pending Actions</span>
+      <span class="section-count">${pending.length}</span>
+    </div>
+    ${pending.map(buildCard).join('')}`;
+  }
+
+  function renderAll(el) {
+    if (allActions.length === 0) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-title">No actions yet</div><div class="empty-sub">Run the pipeline to generate actions.</div></div>';
+      return;
+    }
+    const rows = [...allActions].reverse().map(a => `
+      <tr>
+        <td title="${fmtDate(a.createdAt)}">${timeAgo(a.createdAt)}</td>
+        <td class="td-company">${a.companyName}</td>
+        <td>${actionLabel(a.action)}</td>
+        <td><span class="risk-badge risk-${a.risk}">${a.risk}</span></td>
+        <td><span class="status-pill sp-${a.status}">${a.status}</span></td>
+        <td style="color:var(--text-muted);font-style:italic;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.repNotes || '—'}</td>
+      </tr>`).join('');
+    el.innerHTML = `
+      <table class="data-table">
+        <thead><tr>
+          <th>Time</th><th>Company</th><th>Action</th><th>Risk</th><th>Status</th><th>Notes</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function renderAudit(el) {
+    if (auditEntries.length === 0) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-title">No audit entries</div><div class="empty-sub">Audit entries are written after every pipeline action.</div></div>';
+      return;
+    }
+    const dotClass = (entry) => {
+      if (entry.approved) return 'approved';
+      if (entry.result && entry.result.includes('Queued')) return 'queued';
+      if (entry.result && entry.result.toLowerCase().includes('reject')) return 'rejected';
+      return 'auto_executed';
+    };
+    const items = auditEntries.map(e => `
+      <div class="timeline-item">
+        <div class="tl-dot-wrap"><div class="tl-dot ${dotClass(e)}"></div></div>
+        <div class="tl-body">
+          <div class="tl-title">${actionLabel(e.action)} · ${e.payload && e.payload.company ? e.payload.company : ''}</div>
+          <div class="tl-meta">Trust Level ${e.trustLevel}</div>
+          <div class="tl-result">${e.result || ''}</div>
+          <div class="tl-time">${fmtDate(e.timestamp)}</div>
+        </div>
+      </div>`).join('');
+    el.innerHTML = `<div class="section-header"><span class="section-title">Audit Log</span><span class="section-count">last 50</span></div><div class="timeline">${items}</div>`;
+  }
+
+  // ─── Skeleton loader ──────────────────────────────────────
+  function showSkeleton() {
+    const el = document.getElementById('mainContent');
+    el.innerHTML = Array(3).fill(`
+      <div class="skeleton-card">
+        <div class="skeleton sk-line sk-w-40"></div>
+        <div class="skeleton sk-line sk-w-60"></div>
+        <div class="skeleton sk-line sk-w-100"></div>
+        <div class="skeleton sk-line sk-w-80"></div>
+      </div>`).join('');
+  }
+
+  // ─── Load data ────────────────────────────────────────────
+  async function loadData(showLoading = false) {
+    if (showLoading) showSkeleton();
+    try {
+      const [queueRes, auditRes] = await Promise.all([
+        fetch(`${API}/api/queue`),
+        fetch(`${API}/api/audit`),
+      ]);
+      const queueData = await queueRes.json();
+      const auditData = await auditRes.json();
+
+      trustData = { level: queueData.trustLevel, description: queueData.trustDescription };
+      allActions = queueData.actions || [];
+      auditEntries = auditData.entries || [];
+
+      updateTrustDisplay(trustData.level, trustData.description);
+      updateQueueBadge();
+      lastLoadTime = new Date();
+      document.getElementById('lastRunLabel').textContent = 'Updated just now';
+      renderView();
+    } catch (err) {
+      const el = document.getElementById('mainContent');
+      el.innerHTML = `<div class="error-state"><h3>Failed to load data</h3><p>${err.message}</p></div>`;
+    }
+  }
+
+  // ─── Run pipeline (no-op — just shows a message) ──────────
+  function triggerPipeline() {
+    toast('Pipeline triggered! Restart the server with: npm start pipeline', 'success');
+  }
+
+  // ─── Countdown ────────────────────────────────────────────
+  function startCountdown() {
+    clearInterval(countdownTimer);
+    countdownSecs = 30;
+    countdownTimer = setInterval(() => {
+      countdownSecs--;
+      document.getElementById('countdown').textContent = `${countdownSecs}s`;
+      if (countdownSecs <= 0) {
+        loadData();
+        countdownSecs = 30;
+      }
+    }, 1000);
+  }
+
+  // ─── Last run label ───────────────────────────────────────
+  setInterval(() => {
+    if (!lastLoadTime) return;
+    const diff = Math.floor((Date.now() - lastLoadTime) / 1000);
+    if (diff < 10) document.getElementById('lastRunLabel').textContent = 'Updated just now';
+    else if (diff < 60) document.getElementById('lastRunLabel').textContent = `Updated ${diff}s ago`;
+    else document.getElementById('lastRunLabel').textContent = `Updated ${Math.floor(diff/60)}m ago`;
+  }, 5000);
+
+  // ─── Init ─────────────────────────────────────────────────
+  loadData(true);
+  startCountdown();
+</script>
+</body>
+</html>

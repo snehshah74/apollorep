@@ -1,0 +1,72 @@
+[
+  {
+    "id": "audit_1775160962297_soxt",
+    "action": "send_cold_email",
+    "trustLevel": 1,
+    "approved": false,
+    "payload": {
+      "actionId": "action_1775160962248_zhfo",
+      "company": "Pulse Health Systems"
+    },
+    "result": "Queued for approval",
+    "timestamp": "2026-04-02T20:16:02.297Z"
+  },
+  {
+    "id": "audit_1775161021428_j1vs",
+    "action": "send_daily_brief",
+    "trustLevel": 1,
+    "approved": false,
+    "payload": {
+      "briefActionId": "action_1775161021424_doqe"
+    },
+    "result": "Brief queued for approval",
+    "timestamp": "2026-04-02T20:17:01.428Z"
+  },
+  {
+    "id": "audit_1775161081669_dim4",
+    "action": "send_cold_email",
+    "trustLevel": 1,
+    "approved": false,
+    "payload": {
+      "actionId": "action_1775161081653_juox",
+      "company": "Meridian Analytics"
+    },
+    "result": "Queued for approval",
+    "timestamp": "2026-04-02T20:18:01.669Z"
+  },
+  {
+    "id": "audit_1775161141766_6ccf",
+    "action": "send_cold_email",
+    "trustLevel": 1,
+    "approved": false,
+    "payload": {
+      "actionId": "action_1775161141762_7sgx",
+      "company": "ShieldLayer Security"
+    },
+    "result": "Queued for approval",
+    "timestamp": "2026-04-02T20:19:01.766Z"
+  },
+  {
+    "id": "audit_1775161201876_cgfq",
+    "action": "send_cold_email",
+    "trustLevel": 1,
+    "approved": false,
+    "payload": {
+      "actionId": "action_1775161201873_f4ln",
+      "company": "Pulse Health Systems"
+    },
+    "result": "Queued for approval",
+    "timestamp": "2026-04-02T20:20:01.876Z"
+  },
+  {
+    "id": "audit_1775161262071_rbqk",
+    "action": "send_daily_brief",
+    "trustLevel": 1,
+    "approved": false,
+    "payload": {
+      "briefActionId": "action_1775161262069_9084"
+    },
+    "result": "Brief queued for approval",
+    "timestamp": "2026-04-02T20:21:02.071Z"
+  }
+]
